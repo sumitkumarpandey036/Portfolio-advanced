@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sumit Pandey's advanced frontend developer portfolio showcasing HTML, CSS, JavaScript projects and interactive web applications.">
+  <meta name="keywords" content="frontend developer, portfolio, HTML, CSS, JavaScript, web development">
+  <meta name="author" content="Sumit Pandey">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#007BFF">
+  <title>Sumit Pandey | Frontend Developer Portfolio</title>
+  <link rel="canonical" href="https://sumitpandey.dev/">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#f9f9f9;color:#333;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}header{background-color:#007BFF;color:#fff;padding:1rem 2rem;text-align:center}nav{background-color:#0056b3;padding:0.5rem;text-align:center}nav a{color:#fff;margin:0 1rem;text-decoration:none;font-weight:700;transition:color 0.3s}nav a:hover{color:#FFD700}section{padding:2rem;max-width:1000px;margin:auto}.project{margin-bottom:2rem}footer{text-align:center;padding:1rem;background:#ddd}button{padding:0.5rem 1rem;margin-top:1rem;background-color:#28a745;color:#fff;border:none;cursor:pointer;transition:background 0.3s}button:hover{background-color:#218838}input,form{margin-top:0.5rem;width:100%;max-width:400px;padding:0.5rem;border:1px solid #ccc;border-radius:4px;margin-bottom:0.5rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sumit's Advanced Portfolio</h1>
+    <p>HTML | CSS | JavaScript | Projects Showcase</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I am a passionate frontend developer who builds interactive and responsive websites using HTML, CSS, and JavaScript. I focus on performance and clean design.</p>
+    </section>
+
+    <section id="projects">
+      <h2>My Projects</h2>
+
+      <article class="project">
+        <h3>Task 1: Basic Web Page</h3>
+        <p>A simple webpage with headings, images, links and a JS button alert.</p>
+        <button onclick="alert('Hello from Task 1!')">Click Me</button>
+      </article>
+
+      <article class="project">
+        <h3>Task 2: Contact Form with Validation</h3>
+        <form id="contactForm">
+          <input type="text" id="name" placeholder="Name" required><br>
+          <input type="email" id="email" placeholder="Email" required><br>
+          <button type="submit">Submit</button>
+        </form>
+        <p id="formMsg" aria-live="polite"></p>
+      </article>
+
+      <article class="project">
+        <h3>Task 3: Quiz App</h3>
+        <p id="question">What is 2 + 2?</p>
+        <button onclick="checkAnswer(3)">3</button>
+        <button onclick="checkAnswer(4)">4</button>
+        <button onclick="checkAnswer(5)">5</button>
+        <p id="quizResult" aria-live="polite"></p>
+      </article>
+
+      <article class="project">
+        <h3>Task 4: To-Do App with Local Storage</h3>
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+      </article>
+
+      <article class="project">
+        <h3>Task 5: Joke Fetcher (API)</h3>
+        <button onclick="getJoke()">Get Joke</button>
+        <p id="joke" aria-live="polite"></p>
+      </article>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:sumit@example.com">sumit@example.com</a></p>
+      <p>GitHub: <a href="https://github.com/sumitpandey" target="_blank" rel="noopener noreferrer">github.com/sumitpandey</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Sumit Pandey. All rights reserved.</p>
+  </footer>
+
+  <script defer>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      document.getElementById("formMsg").textContent = (!name || !email.includes("@")) ? "Invalid details." : "Form submitted successfully!";
+    });
+
+    function checkAnswer(ans) {
+      document.getElementById("quizResult").textContent = (ans === 4) ? "Correct!" : "Wrong answer. Try again.";
+    }
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const task = input.value.trim();
+      if (task) {
+        const li = document.createElement("li");
+        li.textContent = task;
+        document.getElementById("taskList").appendChild(li);
+        localStorage.setItem("tasks", document.getElementById("taskList").innerHTML);
+        input.value = "";
+      }
+    }
+
+    window.onload = function() {
+      const saved = localStorage.getItem("tasks");
+      if (saved) document.getElementById("taskList").innerHTML = saved;
+    };
+
+    async function getJoke() {
+      try {
+        const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+        const data = await res.json();
+        document.getElementById("joke").textContent = `${data.setup} - ${data.punchline}`;
+      } catch (e) {
+        document.getElementById("joke").textContent = "Failed to load joke.";
+      }
+    }
+  </script>
+</body>
+</html>
